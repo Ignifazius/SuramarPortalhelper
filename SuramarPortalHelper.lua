@@ -1,11 +1,11 @@
 ﻿local SPH_MapTooltip
 local portalMap = {}
-local loaded = true;
-
-
+local loaded = true
+local falanaarPortal
+local felsoulHoldPortal
 
 local eventResponseFrame = CreateFrame("Frame", "Helper")
-	eventResponseFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+	eventResponseFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	eventResponseFrame:RegisterEvent("ADDON_LOADED");
 	eventResponseFrame:RegisterEvent("WORLD_MAP_UPDATE")
 	eventResponseFrame:RegisterEvent("WORLD_MAP_NAME_UPDATE")
@@ -17,31 +17,22 @@ local eventResponseFrame = CreateFrame("Frame", "Helper")
 				loaded = false;
 				SPH_MapTooltipSetup();
 				SPH_createMap();
-				--print("SPH loaded")
 			end
 		else
-			local _, _, _, isMicroDungeon, microDungeonMapName = GetMapInfo();
+			local _, _, _, isMicroDungeon, microDungeonMapName = GetMapInfo()
+			SPH_HideAllPortals()
 			if GetCurrentMapAreaID() == 1033 and not isMicroDungeon then --Suramar 
 				SPH_ShowPortals(true)
-				--print("showing (zone "..GetCurrentMapAreaID()..")")
-			else
-				SPH_ShowPortals(false)
-				--print("hiding (zone "..GetCurrentMapAreaID()..")")
-			end
-			
-			--[[if isMicroDungeon and microDungeonMapName == "FalanaarTunnels" then
-				SPH_ShowPortals(false)
-				print("is in FalanaarTunnels") --41, 13.69
-			end]]--
+			elseif isMicroDungeon and microDungeonMapName == "FalanaarTunnels" then
+				SPH_ShowFalanaar(true)
+			elseif isMicroDungeon and microDungeonMapName == "SuramarLegionScar" then
+				SPH_ShowFelsoulHold(true)				
+			end		
 		end
 	end
 	
 	eventResponseFrame:SetScript("OnEvent", eventHandler);
 	
-	
-	
-
-
 function SPH_createLoc(x, y, position)
 	local portal = CreateFrame("Frame", "Portal", WorldMapDetailFrame)
 
@@ -51,8 +42,7 @@ function SPH_createLoc(x, y, position)
 	portal:EnableMouse(true)
 	portal:SetFrameStrata("TOOLTIP")
 	portal:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel()+10)
-	
-	
+		
 	portal:SetPoint("CENTER", WorldMapDetailFrame, "TOPLEFT", (x / 100) * WorldMapDetailFrame:GetWidth(), (-y / 100) * WorldMapDetailFrame:GetHeight())
 
 	portal:SetWidth(15)
@@ -73,19 +63,40 @@ function SPH_createLoc(x, y, position)
 		end
 	)	
 	portal:Hide()
-	portalMap[#portalMap+1] = portal;
+	return portal
+end
+
+function SPH_HideAllPortals()
+	SPH_ShowPortals(false)
+	SPH_ShowFalanaar(false)
+	SPH_ShowFelsoulHold(false)	
 end
 
 function SPH_ShowPortals(bool)
 	for i = 1, #portalMap do
 		if bool then
-			portalMap[i]:Show();
+			portalMap[i]:Show()
 		else
-			portalMap[i]:Hide();
+			portalMap[i]:Hide()
 		end
 	end
 end
 
+function SPH_ShowFalanaar(bool)
+	if bool then
+		falanaarPortal:Show()
+	else
+		falanaarPortal:Hide()
+	end
+end
+
+function SPH_ShowFelsoulHold(bool)
+	if bool then
+		felsoulHoldPortal:Show()
+	else
+		felsoulHoldPortal:Hide()
+	end
+end
 
 function SPH_MapTooltipSetup()
 	SPH_MapTooltip = CreateFrame("GameTooltip", "SPH_MapTooltip", WorldMapFrame, "GameTooltipTemplate")
@@ -99,13 +110,15 @@ function SPH_MapTooltipSetup()
 end
 
 function SPH_createMap()
-	SPH_createLoc(30.8, 10.9, "Moon Guard\no|cFFFF0000o|ro oooo\no           o");
-	SPH_createLoc(36.2, 47.1, "Ruins of Elune'eth\nooo |cFFFF0000o|rooo\no           o")
-	SPH_createLoc(21.5, 29.9, "Falanaar\n|cFFFF0000o|roo oooo\no           o")
-	SPH_createLoc(47.5, 82.0, "The Waning Crescent\nooo o|cFFFF0000o|roo\no           o")
-	SPH_createLoc(64.0, 60.4, "Twilight Vineyards\nooo oooo\no           |cFFFF0000o|r")
-	SPH_createLoc(39.1, 76.3, "Felsoul Hold (Cave)\n|cFFFF0000o|roo oooo\no           o")
-	SPH_createLoc(43.6, 79.1, "Lunastre Estate\noo|cFFFF0000o|r oooo\no           o")
-	SPH_createLoc(43.4, 60.7, "Sanctum of Order\nooo oo|cFFFF0000o|ro\no           o")
-	SPH_createLoc(42.2, 35.4, "Tel'anor\nooo ooo|cFFFF0000o|r\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Moon Guard\no|cFFFF0000o|ro oooo\no           o");
+	portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruins of Elune'eth\nooo |cFFFF0000o|rooo\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n|cFFFF0000o|roo oooo\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "The Waning Crescent\nooo o|cFFFF0000o|roo\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(64.0, 60.4, "Twilight Vineyards\nooo oooo\no           |cFFFF0000o|r")
+	portalMap[#portalMap+1] = SPH_createLoc(39.1, 76.3, "Felsoul Hold\nooo oooo\n|cFFFF0000o|r           o")
+	portalMap[#portalMap+1] = SPH_createLoc(43.6, 79.1, "Lunastre Estate\noo|cFFFF0000o|r oooo\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(43.4, 60.7, "Sanctum of Order\nooo oo|cFFFF0000o|ro\no           o")
+	portalMap[#portalMap+1] = SPH_createLoc(42.2, 35.4, "Tel'anor\nooo ooo|cFFFF0000o|r\no           o")
+	falanaarPortal = SPH_createLoc(40.84, 13.44, "Return to base.")
+	felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Return to base.")
 end
