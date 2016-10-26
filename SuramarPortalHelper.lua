@@ -112,9 +112,9 @@ function SPH_updateMarker()
 	if (loaded and IsQuestFlaggedCompleted(42889)) then
 		loaded = false
 		if GetLocale() == "deDE" then
-			portalMap[4] = SPH_createLoc(52.0, 78.75, "Evermoon Terrace\noo oo|cFFFF0000o|r oo\no            o");
-		else
 			portalMap[4] = SPH_createLoc(52.0, 78.75, "Immermond Terrasse\noo oo|cFFFF0000o|r oo\no            o");
+		else
+			portalMap[4] = SPH_createLoc(52.0, 78.75, "Evermoon Terrace\noo oo|cFFFF0000o|r oo\no            o");
 		end
 	end
 end
