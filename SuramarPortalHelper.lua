@@ -9,15 +9,13 @@ local eventResponseFrame = CreateFrame("Frame", "Helper")
 	eventResponseFrame:RegisterEvent("ADDON_LOADED");
 	eventResponseFrame:RegisterEvent("WORLD_MAP_UPDATE")
 	eventResponseFrame:RegisterEvent("WORLD_MAP_NAME_UPDATE")
+	--eventResponseFrame:RegisterEvent("QUEST_QUERY_COMPLETE")
 	
 	
 	local function eventHandler(self, event, arg1 , arg2, arg3, arg4, arg5)
-		if (event == "ADDON_LOADED") then
-			if loaded then
-				loaded = false;
-				SPH_MapTooltipSetup();
-				SPH_createMap();
-			end
+		if (event == "ADDON_LOADED" and arg1 == "SuramarPortalHelper") then
+			SPH_MapTooltipSetup();
+			SPH_createMap();
 		else
 			local _, _, _, isMicroDungeon, microDungeonMapName = GetMapInfo()
 			SPH_HideAllPortals()
@@ -29,6 +27,7 @@ local eventResponseFrame = CreateFrame("Frame", "Helper")
 				SPH_ShowFelsoulHold(true)				
 			end		
 		end
+		SPH_updateMarker();
 	end
 	
 	eventResponseFrame:SetScript("OnEvent", eventHandler);
@@ -107,6 +106,13 @@ function SPH_MapTooltipSetup()
 			SPH_MapTooltip:SetScale(1/self:GetScale())
 		end
 	)
+end
+
+function SPH_updateMarker()
+	if (loaded and IsQuestFlaggedCompleted(42889)) then
+		loaded = false
+		portalMap[4] = SPH_createLoc(52.0, 78.75, "Evermoon Terrace\nooo o|cFFFF0000o|roo\no           o");
+	end
 end
 
 function SPH_createMap()
