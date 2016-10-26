@@ -111,20 +111,39 @@ end
 function SPH_updateMarker()
 	if (loaded and IsQuestFlaggedCompleted(42889)) then
 		loaded = false
-		portalMap[4] = SPH_createLoc(52.0, 78.75, "Evermoon Terrace\nooo o|cFFFF0000o|roo\no           o");
+		if GetLocale() == "deDE" then
+			portalMap[4] = SPH_createLoc(52.0, 78.75, "Evermoon Terrace\noo oo|cFFFF0000o|r oo\no            o");
+		else
+			portalMap[4] = SPH_createLoc(52.0, 78.75, "Immermond Terrasse\noo oo|cFFFF0000o|r oo\no            o");
+		end
 	end
 end
 
+
 function SPH_createMap()
-	portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Moon Guard\no|cFFFF0000o|ro oooo\no           o");
-	portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruins of Elune'eth\nooo |cFFFF0000o|rooo\no           o")
-	portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n|cFFFF0000o|roo oooo\no           o")
-	portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "The Waning Crescent\nooo o|cFFFF0000o|roo\no           o")
-	portalMap[#portalMap+1] = SPH_createLoc(64.0, 60.4, "Twilight Vineyards\nooo oooo\no           |cFFFF0000o|r")
-	portalMap[#portalMap+1] = SPH_createLoc(39.1, 76.3, "Felsoul Hold\nooo oooo\n|cFFFF0000o|r           o")
-	portalMap[#portalMap+1] = SPH_createLoc(43.6, 79.1, "Lunastre Estate\noo|cFFFF0000o|r oooo\no           o")
-	portalMap[#portalMap+1] = SPH_createLoc(43.4, 60.7, "Sanctum of Order\nooo oo|cFFFF0000o|ro\no           o")
-	portalMap[#portalMap+1] = SPH_createLoc(42.2, 35.4, "Tel'anor\nooo ooo|cFFFF0000o|r\no           o")
-	falanaarPortal = SPH_createLoc(40.84, 13.44, "Return to base.")
-	felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Return to base.")
+	if GetLocale() == "deDE" then
+		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Mondwachenfestung\n o|cFFFF0000o|r ooo oo\n o            o");
+		portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruinen von Elune'eth\n oo o|cFFFF0000o|ro oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n |cFFFF0000o|ro ooo oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "Mondsichelforum\n oo oo|cFFFF0000o|r oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(64.0, 60.4, "Zwielichtrebgärten\n oo ooo oo\n o            |cFFFF0000o|r")
+		portalMap[#portalMap+1] = SPH_createLoc(39.1, 76.3, "Teufelsseelenbastion\n oo ooo oo\n |cFFFF0000o|r            o")
+		portalMap[#portalMap+1] = SPH_createLoc(43.6, 79.1, "Anwesen der Lunastres\n oo |cFFFF0000o|roo oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(43.4, 60.7, "Sanktum der Ordnung\n oo ooo |cFFFF0000o|ro\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(42.2, 35.4, "Tel'anor\n oo ooo o|cFFFF0000o|r\n o            o")
+		falanaarPortal = SPH_createLoc(40.84, 13.44, "Zurück zur Basis.")
+		felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Zurück zur Basis.")
+	else
+		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Moon Guard\n o|cFFFF0000o|r ooo oo\n o            o");
+		portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruins of Elune'eth\n oo o|cFFFF0000o|ro oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n |cFFFF0000o|ro ooo oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "The Waning Crescent\n oo oo|cFFFF0000o|r oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(64.0, 60.4, "Twilight Vineyards\n oo ooo oo\n o            |cFFFF0000o|r")
+		portalMap[#portalMap+1] = SPH_createLoc(39.1, 76.3, "Felsoul Hold\n oo ooo oo\n |cFFFF0000o|r            o")
+		portalMap[#portalMap+1] = SPH_createLoc(43.6, 79.1, "Lunastre Estate\n oo |cFFFF0000o|roo oo\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(43.4, 60.7, "Sanctum of Order\n oo ooo |cFFFF0000o|ro\n o            o")
+		portalMap[#portalMap+1] = SPH_createLoc(42.2, 35.4, "Tel'anor\n oo ooo o|cFFFF0000o|r\n o            o")
+		falanaarPortal = SPH_createLoc(40.84, 13.44, "Return to base.")
+		felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Return to base.")
+	end
 end
