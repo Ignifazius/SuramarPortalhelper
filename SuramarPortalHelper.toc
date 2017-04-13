@@ -1,6 +1,6 @@
 ## Title: SuramarPortalHelper
-## Version: 1.2.2
+## Version: 1.2.3
 ## Author: Ignifazius
-## Interface: 70100
+## Interface: 70200
 
 SuramarPortalHelper.lua
