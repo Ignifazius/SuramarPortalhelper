@@ -1,5 +1,5 @@
 ## Title: SuramarPortalHelper
-## Version: 1.2.3
+## Version: 1.2.4
 ## Author: Ignifazius
 ## Interface: 70200
 

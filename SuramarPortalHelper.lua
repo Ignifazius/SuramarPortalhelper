@@ -122,7 +122,7 @@ end
 
 function SPH_createMap()
 	if GetLocale() == "deDE" then
-		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Mondwachenfestung\n o|cFFFF0000o|r ooo oo\n o          oo");
+		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Mondwachenfestung\n o|cFFFF0000o|r ooo oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruinen von Elune'eth\n oo o|cFFFF0000o|ro oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n |cFFFF0000o|ro ooo oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "Mondsichelforum\n oo oo|cFFFF0000o|r oo\n o          oo")
@@ -134,8 +134,21 @@ function SPH_createMap()
 		portalMap[#portalMap+1] = SPH_createLoc(55.5, 69.4, "Hafen der Astravar\n oo ooo oo\n o          |cFFFF0000o|ro")
 		falanaarPortal = SPH_createLoc(40.84, 13.44, "Zurück zur Basis.")
 		felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Zurück zur Basis.")
-	else
-		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Moon Guard\n o|cFFFF0000o|r ooo oo\n o          oo");
+	elseif (GetLocale() == "esES" or GetLocale() == "esMX") then
+		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Bastión de la Guadia Lunar\n o|cFFFF0000o|r ooo oo\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruinas de Elune'eth\n oo o|cFFFF0000o|ro oo\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n |cFFFF0000o|ro ooo oo\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "El Creciente Menguante\n oo oo|cFFFF0000o|r oo\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(64.0, 60.4, "Viñedos Crepusculares\n oo ooo oo\n o          o|cFFFF0000o|r")
+		portalMap[#portalMap+1] = SPH_createLoc(39.1, 76.3, "Bastión Alma Vil\n oo ooo oo\n |cFFFF0000o|r          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(43.6, 79.1, "Finca de Lunastre\n oo |cFFFF0000o|roo oo\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(43.4, 60.7, "Santuario del Orden\n oo ooo |cFFFF0000o|ro\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(42.2, 35.4, "Tel'anor\n oo ooo o|cFFFF0000o|r\n o          oo")
+		portalMap[#portalMap+1] = SPH_createLoc(55.5, 69.4, "Puerto de los Astravar\n oo ooo oo\n o          |cFFFF0000o|ro")
+		falanaarPortal = SPH_createLoc(40.84, 13.44, "Retorno a base.")
+		felsoulHoldPortal = SPH_createLoc(53.64, 36.75, "Retorno a base.")
+	else 
+		portalMap[#portalMap+1] = SPH_createLoc(30.8, 10.9, "Moon Guard\n o|cFFFF0000o|r ooo oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(36.2, 47.1, "Ruins of Elune'eth\n oo o|cFFFF0000o|ro oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(21.5, 29.9, "Falanaar\n |cFFFF0000o|ro ooo oo\n o          oo")
 		portalMap[#portalMap+1] = SPH_createLoc(47.5, 82.0, "The Waning Crescent\n oo oo|cFFFF0000o|r oo\n o          oo")
