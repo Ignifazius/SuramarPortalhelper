@@ -5,25 +5,32 @@ local falanaarPortal
 local felsoulHoldPortal
 
 local eventResponseFrame = CreateFrame("Frame", "Helper")
-	eventResponseFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	eventResponseFrame:RegisterEvent("ADDON_LOADED");
-	eventResponseFrame:RegisterEvent("WORLD_MAP_UPDATE")
-	eventResponseFrame:RegisterEvent("WORLD_MAP_NAME_UPDATE")
+	--eventResponseFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	eventResponseFrame:RegisterEvent("ZONE_CHANGED")
+	eventResponseFrame:RegisterEvent("ADDON_LOADED")
+    --eventResponseFrame:RegisterEvent("NEW_WMO_CHUNK")
+    --eventResponseFrame:RegisterEvent("MAP_EXPLORATION_UPDATED")
+    --eventResponseFrame:RegisterEvent("MINIMAP_UPDATE_TRACKING")
+    --eventResponseFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
+	--eventResponseFrame:RegisterEvent("WORLD_MAP_UPDATE")
+	--eventResponseFrame:RegisterEvent("WORLD_MAP_NAME_UPDATE")
 	--eventResponseFrame:RegisterEvent("QUEST_QUERY_COMPLETE")
 	
 	
 	local function eventHandler(self, event, arg1 , arg2, arg3, arg4, arg5)
+    --print(event)
 		if (event == "ADDON_LOADED" and arg1 == "SuramarPortalHelper") then
 			SPH_MapTooltipSetup();
 			SPH_createMap();
 		else
-			local _, _, _, isMicroDungeon, microDungeonMapName = GetMapInfo()
+            --local locID = C_Map.GetBestMapForUnit("player")
+			--local _, _, _, isMicroDungeon, microDungeonMapName = C_Map.GetMapInfo()
 			SPH_HideAllPortals()
-			if GetCurrentMapAreaID() == 1033 and not isMicroDungeon then --Suramar 
+			if WorldMapFrame:GetMapID() == 680 then -- player is in Suramar 
 				SPH_ShowPortals(true)
-			elseif isMicroDungeon and microDungeonMapName == "FalanaarTunnels" then
+			elseif WorldMapFrame:GetMapID() == 684 then -- FalanaarTunnels
 				SPH_ShowFalanaar(true)
-			elseif isMicroDungeon and microDungeonMapName == "SuramarLegionScar" then
+			elseif WorldMapFrame:GetMapID() == 682 then -- SuramarLegionScar
 				SPH_ShowFelsoulHold(true)				
 			end		
 		end
@@ -33,16 +40,16 @@ local eventResponseFrame = CreateFrame("Frame", "Helper")
 	eventResponseFrame:SetScript("OnEvent", eventHandler);
 	
 function SPH_createLoc(x, y, position)
-	local portal = CreateFrame("Frame", "Portal", WorldMapDetailFrame)
+	local portal = CreateFrame("Frame", "Portal", WorldMapFrame)
 
 	portal.Texture = portal:CreateTexture()
 	portal.Texture:SetTexture("Interface\\Icons\\spell_arcane_teleportdarnassus")
 	portal.Texture:SetAllPoints()
 	portal:EnableMouse(true)
 	portal:SetFrameStrata("TOOLTIP")
-	portal:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel()+10)
+	portal:SetFrameLevel(WorldMapFrame:GetFrameLevel()+10)
 		
-	portal:SetPoint("CENTER", WorldMapDetailFrame, "TOPLEFT", (x / 100) * WorldMapDetailFrame:GetWidth(), (-y / 100) * WorldMapDetailFrame:GetHeight())
+	portal:SetPoint("CENTER", WorldMapFrame.ScrollContainer, "TOPLEFT", (x / 100) * WorldMapFrame.ScrollContainer:GetWidth(), (-y / 100) * WorldMapFrame.ScrollContainer:GetHeight())
 
 	portal:SetWidth(15)
 	portal:SetHeight(15)
@@ -100,7 +107,7 @@ end
 function SPH_MapTooltipSetup()
 	SPH_MapTooltip = CreateFrame("GameTooltip", "SPH_MapTooltip", WorldMapFrame, "GameTooltipTemplate")
 	SPH_MapTooltip:SetFrameStrata("TOOLTIP")
-	SPH_MapTooltip:SetFrameLevel(WorldMapDetailFrame:GetFrameLevel()+20)
+	SPH_MapTooltip:SetFrameLevel(WorldMapFrame:GetFrameLevel()+20)
 	WorldMapFrame:HookScript("OnSizeChanged",
 		function(self)
 			SPH_MapTooltip:SetScale(1/self:GetScale())
@@ -109,7 +116,7 @@ function SPH_MapTooltipSetup()
 end
 
 function SPH_updateMarker()
-	if (loaded and IsQuestFlaggedCompleted(42889)) then
+	if (loaded and C_QuestLog.IsQuestFlaggedCompleted(42889)) then
 		loaded = false
 		if GetLocale() == "deDE" then
 			portalMap[4] = SPH_createLoc(52.0, 78.75, "Immermond Terrasse\noo oo|cFFFF0000o|r oo\no            o");
